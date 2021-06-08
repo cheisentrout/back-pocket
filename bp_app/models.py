@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
 
 # USER - a User can have many notes, images, and cards
-class User(models.Model):
+class AppUser(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     username = models.CharField(max_length=40)
@@ -14,7 +17,7 @@ class User(models.Model):
 
 # NOTE - each Note can belong to only one User
 class Note(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     note_text = models.CharField(max_length=400)
 
     def __str__(self):
@@ -22,7 +25,7 @@ class Note(models.Model):
 
 # IMAGE - each Image can belong to only one User
 class Image(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     img_src = models.CharField(max_length=500)
 
     def __str__(self):
@@ -30,11 +33,10 @@ class Image(models.Model):
 
 # CARD - each Card can belong to only one User, unless I'm able to implement the public gallery with the option to "save".
 class Card(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=30, null=True)
     card_text = models.CharField(max_length=400)
     card_img = models.CharField(max_length=500)
-    # Change this to models.BooleanField?:
     public = models.BooleanField(default=False)
 
     def __str__(self):
