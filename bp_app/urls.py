@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('pocket/users', views.UserList.as_view(), name='user_list'),
+    path('pocket/auth', obtain_auth_token),
+    path('pocket/users/', views.UserList.as_view(), name='user_list'),
     path('pocket/users/<int:pk>', views.UserDetail.as_view(), name='user_detail'),
     path('pocket/notes', views.NoteList.as_view(), name='note_list'),
     path('pocket/notes/<int:pk>', views.NoteDetail.as_view(), name='note_detail'),

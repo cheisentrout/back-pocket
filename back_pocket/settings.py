@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ['localhost', 'tranquil-wildwood-78396.herokuapp.com']
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'bp_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -101,6 +102,13 @@ DATABASES = {
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
+
+# API Permissions Settings - currently allows anyone to access the app, but API views are restricted to authenticated users through the views.py file.
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
